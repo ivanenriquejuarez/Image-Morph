@@ -1,4 +1,4 @@
-#Image Morphing
+# Image Morphing
 
 This project demonstrates a simple **image tweening algorithm** written in C that morphs a small circle into a large circle by generating intermediate frames using **linear interpolation**. The project creates a series of SVG files to visualize the morphing process.
 
