@@ -67,7 +67,7 @@ int main() {
     Circle result;  // To hold the interpolated circle in each frame
 
     // Loop to generate frames from t = 0 to t = 1, with 0.01 increments for smooth transitions
-    for (float t = 0.0; t <= 1.0; t += 0.01) {
+    for (float t = 0.0; t <= 1.0; t += 0.1) {
         // Morph the small circle into the big circle based on the interpolation factor 't'
         morph(&small_circle, &big_circle, t, &result);
         // Generate the corresponding SVG file for the current frame
