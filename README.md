@@ -8,7 +8,6 @@ This project demonstrates a simple **image tweening algorithm** written in C tha
 - [Project Structure](#project-structure)
 - [How It Works](#how-it-works)
 - [Current Issues](#current-issues)
-- [Future Improvements](#future-improvements)
 
 ## Overview
 This is a basic project that showcases how to perform image morphing between two geometric shapes. The project generates a series of SVG files representing each step of the morphing process.
@@ -28,13 +27,9 @@ You can run this project to see a smooth transition from a small circle to a lar
 
 
 ## Project Structure
-src - contains all source code in C and python
-    - C contains the very basics of interpolating methods.
-    - Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle.
-      displayresults[folder]: will be the method to animate the svg frame generated files into a clip/gif/video.
-      morph1.py: is the translated version of interpolating_shapes.c which again, it doesn't extract any svg files, it has prerecorded path details of a small circle and large circlr to morph into the large one.
-      morph2.py: is the actual morphing from a circle to a triangle that uses a more sophisticated method that requires a lot more points.
-    - framegenerated[folder]: may or may not be here but is the output from both morph1.py and morph2.py that has the generated svg files.
+1) src - contains all source code in C and python
+    1a) C contains the very basics of interpolating methods.
+    1b) Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle.
 
 ## Current Issues
 1) morph2.py cannot do complex shapes yet.
