@@ -28,8 +28,8 @@ You can run this project to see a smooth transition from a small circle to a lar
 
 ## Project Structure
 1) src - contains all source code in C and python
-1a) C contains the very basics of interpolating methods.
-1b) Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle.
+-  C contains the very basics of interpolating methods.
+- Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle.
 
 ## Current Issues
 1) morph2.py cannot do complex shapes yet.
