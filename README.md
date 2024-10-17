@@ -11,9 +11,9 @@ This project demonstrates a simple **image tweening algorithm** written in C tha
 - [Future Improvements](#future-improvements)
 
 ## Overview
-This is a basic project that showcases how to perform image morphing between two geometric shapes (a small circle and a big circle). The project generates a series of SVG files representing each step of the morphing process.
+This is a basic project that showcases how to perform image morphing between two geometric shapes. The project generates a series of SVG files representing each step of the morphing process.
 
-You can run this project to see a smooth transition from a small circle to a larger one, with all the intermediate shapes saved as separate SVG files.
+You can run this project to see a smooth transition from a small circle to a larger one, with all the intermediate shapes saved as separate SVG files in c.
 
 ## Features
 - Two versions C and Python
