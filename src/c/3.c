@@ -1,13 +1,15 @@
 #include <stdio.h>
 
-// Define a structure to hold 2D points
-typedef struct {
+// Define a structure to hold 2D points; small square and large square
+typedef struct 
+{
     float x;
     float y;
 } Point;
 
 // Function to interpolate between two points
-Point interpolate(Point start, Point end, float t) {
+Point interpolate(Point start, Point end, float t) 
+{
     Point result;
     result.x = start.x + t * (end.x - start.x);
     result.y = start.y + t * (end.y - start.y);
@@ -15,20 +17,23 @@ Point interpolate(Point start, Point end, float t) {
 }
 
 // Function to interpolate between two shapes (arrays of points)
-void interpolate_shape(Point* shape1, Point* shape2, Point* result, float t, int num_points) {
+void interpolate_shape(Point* shape1, Point* shape2, Point* result, float t, int num_points) 
+{
     for (int i = 0; i < num_points; i++) {
         result[i] = interpolate(shape1[i], shape2[i], t);  // Interpolate each point
     }
 }
 
 // Function to print a shape (array of points)
-void print_shape(Point* shape, int num_points) {
+void print_shape(Point* shape, int num_points) 
+{
     for (int i = 0; i < num_points; i++) {
         printf("Point %d: (%f, %f)\n", i, shape[i].x, shape[i].y);
     }
 }
 
-int main() {
+int main() 
+{
     // Define two shapes (small square and large square)
 	// Small square
     Point small_square[4] = {

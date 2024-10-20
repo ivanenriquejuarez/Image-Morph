@@ -1,20 +1,23 @@
 #include <stdio.h>
 
 // Define a structure to hold 2D points (x, y)
-typedef struct {
+typedef struct 
+{
     float x;
     float y;
 } Point;
 
 // Function to interpolate between two points
-Point interpolate(Point start, Point end, float t) {
+Point interpolate(Point start, Point end, float t) 
+{
     Point result;
     result.x = start.x + t * (end.x - start.x);
     result.y = start.y + t * (end.y - start.y);
     return result;
 }
 
-int main() {
+int main() 
+{
     // Define two points in 2D space
     Point start = {0.0, 0.0};  // Starting point (0, 0)
     Point end = {1.0, 1.0};    // Ending point (1, 1)
