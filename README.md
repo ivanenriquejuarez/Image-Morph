@@ -36,7 +36,11 @@ You can run this project to see a smooth transition from a small circle to a lar
 2) 2.c: a more advance use of the interpolation method is creating an object, we used x and y coordinates. With the previous knowledge, we calculate the results for both x and y coordinates which gives us our t value.
 3) 3.c: now we move onto 2d-coordinates of a small square and large square, same idea. We calculate their separate coordinates and it gives us their respective t value results.
 4) 4.c: lets apply the knowledge from the previous intermediate methods but now we wish to generate an SVG file for the given results of t. We don't extract anything, we have prewritten circle(s) coordinates wihtin a method.
-5) 
+5) 5.c: triangle to triangle.
+6) 6.c: rectangle to triangle
+7) 7.c: draft
+8) 10.c: Extracted svg details from small and big circle with morphing implementation (working).
+9) 11.c: Extracted svg details from circle to traingle attribute (chatgpt response).
 
 ## Current Issues
 1) morph2.py cannot do complex shapes yet.
