@@ -185,7 +185,7 @@ def generate_interpolated_svgs(startsvg, finalsvg, number_of_steps=100, output_f
         with open(filepath, 'w') as f:
             f.write(svg_content)
         
-        print(f"Generated: {filepath}")
+        #print(f"Generated: {filepath}")
 
 def generate_svg_content(lines):
     svg = ET.Element('svg', {
