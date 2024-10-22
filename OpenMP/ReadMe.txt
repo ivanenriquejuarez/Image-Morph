@@ -39,3 +39,41 @@ Well say we have a complex shape and one of the threads job is to make a curved 
 the curved line in half and assign those vertices to two threads. Then wait and join the information before any of those threads
 can be used again.
 
+______Morph_2.c_____
+In this version of parallelization we can take it a set further to do some calcuations in parallel as well. We see that here in  number of circle points
+
+#pragma omp parallel for
+            for (int i = 0; i < num_circle_points; i++) {
+                // Calculate the initial point on the circle's circumference
+                float angle = (2 * M_PI / num_circle_points) * i;
+                float circle_x = cx + r * cos(angle);
+                float circle_y = cy + r * sin(angle);
+
+                // Determine which triangle vertex this point moves towards
+                float* triangle_vertex = triangle_vertices[i % 3];
+                float tx = triangle_vertex[0];
+                float ty = triangle_vertex[1];
+
+                // Use the corresponding control point for the Bézier curve
+                float* control_point = control_points[i % 3];
+
+                // Calculate the Bézier point at time t
+                float interp_x = bezier_point(circle_x, control_point[0], tx, t);
+                float interp_y = bezier_point(circle_y, control_point[1], ty, t);
+
+                // Add the point to the interpolated points string
+                #pragma omp critical
+                {
+                    sprintf(point, "%f,%f ", interp_x, interp_y);
+                    strcat(interpolated_points, point);
+                }
+            }
+For simplicity we let omp parallel decide which threads do the work.
+
+                #pragma omp critical
+                {
+                    sprintf(point, "%f,%f ", interp_x, interp_y);
+                    strcat(interpolated_points, point);
+                }
+
+This portion of the code ensures that only one thread at a time to prevent data corruption.
