@@ -26,6 +26,54 @@ For the sake of this project and learning we maunally did it ourselves.
 We have a start point and an end point for each thread.
 We also included an if statement to check if we have reached the end and no longer need to assign anything to a thread.
 
+    #pragma omp parallel
+    {
+        // Get the total number of threads and the current thread ID
+        int thread_id = omp_get_thread_num();
+        num_threads = omp_get_num_threads();
+
+        // Divide the frames among threads
+        int frames_per_thread = num_frames / num_threads;
+        int start_frame = thread_id * frames_per_thread;
+        int end_frame = (thread_id == num_threads - 1) ? num_frames : start_frame + frames_per_thread;
+
+        // Each thread processes its portion of frames
+        for (int frame = start_frame; frame < end_frame; frame++) {
+            float t = frame / 100.0f;  // Interpolation factor
+            char interpolated_points[1024] = "";
+            char point[50];
+
+            // Calculate interpolated points between circle and triangle vertices using Bézier curves
+            for (int i = 0; i < num_circle_points; i++) {
+                // Calculate the initial point on the circle's circumference
+                float angle = (2 * M_PI / num_circle_points) * i;
+                float circle_x = cx + r * cos(angle);
+                float circle_y = cy + r * sin(angle);
+
+                // Determine which triangle vertex this point moves towards
+                float* triangle_vertex = triangle_vertices[i % 3];
+                float tx = triangle_vertex[0];
+                float ty = triangle_vertex[1];
+
+                // Use the corresponding control point for the Bézier curve
+                float* control_point = control_points[i % 3];
+
+                // Calculate the Bézier point at time t
+                float interp_x = bezier_point(circle_x, control_point[0], tx, t);
+                float interp_y = bezier_point(circle_y, control_point[1], ty, t);
+
+                // Add the point to the interpolated points string
+                sprintf(point, "%f,%f ", interp_x, interp_y);
+                strcat(interpolated_points, point);
+            }
+
+            // Remove trailing space
+            interpolated_points[strlen(interpolated_points) - 1] = '\0';
+
+            // Generate the corresponding SVG file for the current frame
+            write_svg(interpolated_points, frame);
+        }
+
 The parallelization works by dividing up the frames that each thread will work on:
 For example,
 
