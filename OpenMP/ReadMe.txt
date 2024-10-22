@@ -77,3 +77,12 @@ For simplicity we let omp parallel decide which threads do the work.
                 }
 
 This portion of the code ensures that only one thread at a time to prevent data corruption.
+
+
+At first I thought there would be some sort of conflict when assigning threads because we a parallel block and a parallel for block within it.
+Fortunately OpenMP allows for nesting.
+
+#pragma omp parallel creates a region where all threads execute the code within the block. Each thread
+gets its own copy.
+
+#pragma omp parallel for automatically divides the iterations of the loop among the available threads.
