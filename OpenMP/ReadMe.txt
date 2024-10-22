@@ -8,6 +8,8 @@ After the installation make sure you have the file located in:
 Command to create file:
 gcc -o morph_svg morph.c -I/usr/include/libxml2 -lxml2 -lm -fopenmp
 
+_____________________________________________morph.c____________________________________________________________
+
 morph_svg will create the frames from 0-99 (total of 100) with the name: Frame_##.svg where the ## indicates the frame number
 There will be an output message in the terminal when the files are created
 
@@ -39,7 +41,8 @@ Well say we have a complex shape and one of the threads job is to make a curved 
 the curved line in half and assign those vertices to two threads. Then wait and join the information before any of those threads
 can be used again.
 
-______Morph_2.c_____
+_______________________________Morph_2.c_______________________________________________________
+
 In this version of parallelization we can take it a set further to do some calcuations in parallel as well. We see that here in  number of circle points
 
 #pragma omp parallel for
