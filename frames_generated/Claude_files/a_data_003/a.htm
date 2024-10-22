@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script>
+      (function() {
+        const originalConsole = window.console;
+        window.console = {
+          log: (...args) => {
+            originalConsole.log(...args);
+            window.parent.postMessage({ type: 'console', message: args.join(' ') }, '*');
+          },
+          error: (...args) => {
+            originalConsole.error(...args);
+            window.parent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
+          },
+          warn: (...args) => {
+            originalConsole.warn(...args);
+            window.parent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
+          }
+        };
+
+        window.addEventListener('error', (event) => {
+          window.parent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
+        });
+      })();
+    </script>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Animation Player</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #frame-counter {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        #animation-container {
+            border: 1px solid #ccc;
+            margin: 20px auto;
+            min-height: 400px;
+        }
+        #svg-image {
+            width: 100%;
+            height: 400px;
+        }
+        #debug-info {
+            margin: 10px 0;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="animation-container">
+            <img id="svg-image" src="a_data/tc_1_start.svg" alt="Animation frame">
+        </div>
+        <div id="frame-counter">Frame: 0 / 101</div>
+        <div id="debug-info">Error loading file: tc_1_start.svg</div>
+        <div class="controls">
+            <button onclick="togglePlay()" id="playPauseBtn">Play</button>
+            <button onclick="resetAnimation()">Reset</button>
+            <button onclick="showCurrentFile()">Show Current Filename</button>
+        </div>
+    </div>
+
+    <script>
+        const svgImage = document.getElementById('svg-image');
+        const frameCounter = document.getElementById('frame-counter');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const debugInfo = document.getElementById('debug-info');
+        let currentFrame = 0;
+        let isPlaying = false;
+        let animationInterval;
+
+        // Generate array of file names
+        const frames = [
+            'tc_1_start.svg',
+            ...Array.from({length: 100}, (_, i) => `tc1_${String(i + 1).padStart(3, '0')}.svg`),
+            'tc_1_final.svg'
+        ];
+
+        function loadFrame(frameIndex) {
+            const filename = frames[frameIndex];
+            console.log('Loading frame:', filename);  // Debug log
+            svgImage.src = filename;
+            frameCounter.textContent = `Frame: ${frameIndex} / ${frames.length - 1}`;
+            debugInfo.textContent = `Loading: ${filename}`;
+        }
+
+        function showCurrentFile() {
+            alert('Current file: ' + frames[currentFrame]);
+        }
+
+        function nextFrame() {
+            currentFrame = (currentFrame + 1) % frames.length;
+            loadFrame(currentFrame);
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            playPauseBtn.textContent = isPlaying ? 'Pause' : 'Play';
+            
+            if (isPlaying) {
+                animationInterval = setInterval(nextFrame, 100); // 10 frames per second
+            } else {
+                clearInterval(animationInterval);
+            }
+        }
+
+        function resetAnimation() {
+            isPlaying = false;
+            clearInterval(animationInterval);
+            playPauseBtn.textContent = 'Play';
+            currentFrame = 0;
+            loadFrame(currentFrame);
+        }
+
+        // Load initial frame
+        loadFrame(0);
+
+        // Add error handling for image loading
+        svgImage.onerror = function() {
+            console.error('Error loading:', frames[currentFrame]);  // Debug log
+            debugInfo.textContent = `Error loading file: ${frames[currentFrame]}`;
+        };
+
+        svgImage.onload = function() {
+            console.log('Successfully loaded:', frames[currentFrame]);  // Debug log
+        };
+    </script>
+
+
+</body></html>
