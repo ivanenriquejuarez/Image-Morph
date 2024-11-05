@@ -151,6 +151,8 @@ int main() {
         char interpolated_points[1024] = "";
         char point[50];
 
+        // Parallelize the loop for Bezier point calculations
+        #pragma omp parallel for private(point) shared(interpolated_points)
         for (int i = 0; i < num_circle_points; i++) {
             // Calculate the initial point on the circle's circumference
             float angle = (2 * M_PI / num_circle_points) * i;
@@ -169,9 +171,12 @@ int main() {
             float interp_x = bezier_point(circle_x, control_point[0], tx, t);
             float interp_y = bezier_point(circle_y, control_point[1], ty, t);
 
-            // Add the point to the interpolated points string
-            sprintf(point, "%f,%f ", interp_x, interp_y);
-            strcat(interpolated_points, point);
+            // Add the point to the interpolated points string safely
+            #pragma omp critical
+            {
+                sprintf(point, "%f,%f ", interp_x, interp_y);
+                strcat(interpolated_points, point);
+            }
         }
 
         // Remove trailing space
