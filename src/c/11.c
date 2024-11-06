@@ -92,12 +92,12 @@ float bezier_point(float p0, float p1, float p2, float t) {
 // Function to write the interpolated shape to an SVG file
 void write_svg(char* interpolated_points, int frame_number) {
     char filename[256];
-    sprintf(filename, "../../frames_generated/frame_%03d.svg", frame_number);
+    sprintf(filename, "./circle_to_triangle/frame_%03d.svg", frame_number);
 
     // Ensure the output directory exists
     struct stat st = {0};
-    if (stat("../../frames_generated", &st) == -1) {
-        mkdir("../../frames_generated", 0700);
+    if (stat("./circle_to_triangle", &st) == -1) {
+        mkdir("./circle_to_triangle", 0700);
     }
 
     // Write the SVG content to the file

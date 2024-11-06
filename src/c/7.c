@@ -31,81 +31,41 @@ void morph(Polygon* start, Polygon* end, float t, Polygon* result) {
     }
 }
 
-// Function to resample a polygon with fewer vertices to match the number of vertices
-void resample_polygon(Polygon* poly, int new_num_vertices) {
-    Point* new_vertices = (Point*) malloc(new_num_vertices * sizeof(Point));
-    int current_num_vertices = poly->num_vertices;
+// Function to manually define the triangle points
+void define_triangle(Polygon* triangle) {
+    // Allocating memory for 3 vertices
+    triangle->num_vertices = 3;
+    triangle->vertices = (Point*) malloc(triangle->num_vertices * sizeof(Point));
 
-    // For each new vertex, calculate where it should be along the existing edges
-    for (int i = 0; i < new_num_vertices; i++) {
-        float t = (float)i / new_num_vertices;  // Parameter along the polygon's length
-        int seg = (int)(t * current_num_vertices);  // Find the segment this t corresponds to
-        float local_t = (t * current_num_vertices) - seg;
+    // Define the 3 points of a standard triangle
+    triangle->vertices[0].x = 250;  // Top vertex
+    triangle->vertices[0].y = 50;
 
-        // Wrap around to the first vertex if we're at the last segment
-        int next = (seg + 1) % current_num_vertices;
+    triangle->vertices[1].x = 100;  // Bottom-left vertex
+    triangle->vertices[1].y = 400;
 
-        // Linearly interpolate between vertices to find the new point
-        new_vertices[i].x = (1 - local_t) * poly->vertices[seg].x + local_t * poly->vertices[next].x;
-        new_vertices[i].y = (1 - local_t) * poly->vertices[seg].y + local_t * poly->vertices[next].y;
-    }
-
-    // Replace the old vertices with the new resampled vertices
-    free(poly->vertices);
-    poly->vertices = new_vertices;
-    poly->num_vertices = new_num_vertices;
+    triangle->vertices[2].x = 400;  // Bottom-right vertex
+    triangle->vertices[2].y = 400;
 }
 
-// Function to extract polygon points from an SVG file
-int extract_polygon_points(const char* svg_file, Polygon* polygon) {
-    xmlDoc *doc = xmlReadFile(svg_file, NULL, 0);
-    if (doc == NULL) {
-        printf("Error: Could not parse file %s\n", svg_file);
-        return -1;
-    }
+// Function to manually define the rectangle points
+void define_rectangle(Polygon* rectangle) {
+    // Allocating memory for 4 vertices
+    rectangle->num_vertices = 4;
+    rectangle->vertices = (Point*) malloc(rectangle->num_vertices * sizeof(Point));
 
-    // Get the root element of the SVG file
-    xmlNode *root_element = xmlDocGetRootElement(doc);
+    // Define the 4 points of a rectangle
+    rectangle->vertices[0].x = 100;  // Top-left
+    rectangle->vertices[0].y = 100;
 
-    // Traverse to find the <polygon> element and extract the 'points' attribute
-    xmlNode *node = root_element->children;
-    while (node) {
-        if (node->type == XML_ELEMENT_NODE && xmlStrcmp(node->name, (const xmlChar *)"polygon") == 0) {
-            // Extract the 'points' attribute
-            xmlChar* points_str = xmlGetProp(node, (const xmlChar *)"points");
-            if (points_str) {
-                // Count the number of vertices (by counting spaces)
-                int num_vertices = 0;
-                for (int i = 0; points_str[i] != '\0'; i++) {
-                    if (points_str[i] == ' ') {
-                        num_vertices++;
-                    }
-                }
-                num_vertices++; // One more vertex than spaces
+    rectangle->vertices[1].x = 400;  // Top-right
+    rectangle->vertices[1].y = 100;
 
-                // Allocate memory for the polygon's vertices
-                polygon->vertices = (Point*) malloc(num_vertices * sizeof(Point));
-                polygon->num_vertices = num_vertices;
+    rectangle->vertices[2].x = 400;  // Bottom-right
+    rectangle->vertices[2].y = 400;
 
-                // Parse the points into the vertices array
-                char* token = strtok((char*) points_str, " ");
-                int i = 0;
-                while (token != NULL && i < num_vertices) {
-                    sscanf(token, "%f,%f", &polygon->vertices[i].x, &polygon->vertices[i].y);
-                    token = strtok(NULL, " ");
-                    i++;
-                }
-
-                xmlFree(points_str);
-                xmlFreeDoc(doc);
-                return 0;
-            }
-        }
-        node = node->next;
-    }
-
-    xmlFreeDoc(doc);
-    return -1;
+    rectangle->vertices[3].x = 100;  // Bottom-left
+    rectangle->vertices[3].y = 400;
 }
 
 // Function to generate an SVG file for the given polygon
@@ -150,28 +110,14 @@ int main() {
     // Define the start and end polygons (rectangle and triangle)
     Polygon rectangle, triangle;
 
-    // Extract the rectangle polygon points from the SVG file
-    if (extract_polygon_points("../../svg/rectangle.svg", &rectangle) == -1) {
-        printf("Error: Could not extract rectangle points.\n");
-        return -1;
-    }
-
-    // Extract the triangle polygon points from the SVG file
-    if (extract_polygon_points("../../svg/triangle.svg", &triangle) == -1) {
-        printf("Error: Could not extract triangle points.\n");
-        return -1;
-    }
-
-    // Resample the polygon with fewer vertices to match the one with more vertices
-    if (rectangle.num_vertices > triangle.num_vertices) {
-        resample_polygon(&triangle, rectangle.num_vertices);
-    } else if (triangle.num_vertices > rectangle.num_vertices) {
-        resample_polygon(&rectangle, triangle.num_vertices);
-    }
+    // Manually define the rectangle and triangle points
+    define_rectangle(&rectangle);
+    define_triangle(&triangle);
 
     // Allocate memory for the result polygon (with the same number of vertices)
+    int max_vertices = (rectangle.num_vertices > triangle.num_vertices) ? rectangle.num_vertices : triangle.num_vertices;
     Polygon result_polygon;
-    result_polygon.num_vertices = rectangle.num_vertices;  // Both polygons now have the same number of vertices
+    result_polygon.num_vertices = max_vertices;
     result_polygon.vertices = (Point*) malloc(result_polygon.num_vertices * sizeof(Point));
 
     // Loop to generate frames from t = 0 to t = 1, with 0.01 increments for smooth transitions

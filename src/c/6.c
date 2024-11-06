@@ -3,7 +3,7 @@
 #include <sys/stat.h>  // For creating directories
 #include <sys/types.h>
 
-//Rectangle to Triangle with Coordinates
+//Rectangle to Triangle with Coordinates, no svg
 // Define a structure to represent a point (x, y)
 typedef struct {
     float x;

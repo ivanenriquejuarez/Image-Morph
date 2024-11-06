@@ -72,11 +72,11 @@ int load_svg(const char* filename, Circle* circle)
         return -1;
     }
 
-    // Traverse the children of <svg> to find the <circle> element
+    // Traverse the children of <svg> to find the <circle> element.
     xmlNode *node = root_element->children;
     while (node) {
         if (node->type == XML_ELEMENT_NODE && xmlStrcmp(node->name, (const xmlChar *)"circle") == 0) {
-            // Extract the 'cx', 'cy', and 'r' attributes
+            //Extract the 'cx', 'cy', and 'r' attributes.
             xmlChar* cx_str = xmlGetProp(node, (const xmlChar *)"cx");
             xmlChar* cy_str = xmlGetProp(node, (const xmlChar *)"cy");
             xmlChar* r_str = xmlGetProp(node, (const xmlChar *)"r");
