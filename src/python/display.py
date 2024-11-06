@@ -1,8 +1,5 @@
-'''TO DO:
-    fix animation sequence? turning out really weird
-    make gif of animation
-    
-    to run on terminal: /opt/homebrew/bin/python3 display.py
+'''
+DISPLAY SVG MORPH PROGRAM
 '''
 import tkinter as tk
 from tkinter import *
@@ -15,7 +12,7 @@ from PIL import Image, ImageTk
 FUNCTIONS
 '''
 class SVGAnimator:
-    def __init__(self, root, png_files, label, delay=500):
+    def __init__(self, root, png_files, label, delay=10):
         self.root = root
         self.png_files = png_files
         self.label = label  # Update to use the provided label
@@ -28,7 +25,7 @@ class SVGAnimator:
     def update_image(self):
         img = Image.open(self.png_files[self.current_image_index])
         
-        # Resize the image to fit the label dimensions
+        #image resize to keep similar to original dimensions
         img = img.resize((400, 400), Image.LANCZOS)
         img_tk = ImageTk.PhotoImage(img)  
         
@@ -52,7 +49,7 @@ def convert_svgs_to_pngs(svg_directory, output_directory):
     #converting svgs to pngs
     for svg_file in svg_files:
         svg_path = os.path.join(svg_directory, svg_file)
-        png_file = os.path.splitext(svg_file)[0] + '.png'  # Change the extension
+        png_file = os.path.splitext(svg_file)[0] + '.png'
         png_path = os.path.join(output_directory, png_file)
 
         #svg to png cairosvg
@@ -94,6 +91,27 @@ def example2(): #example 2 display
     
     animator = SVGAnimator(root, png_files, third, delay=40)    
 
+def example3(): #example 2 display
+    display_svg("./ex3/frame_0.svg", first, "Phase 1")
+    display_svg("./ex3/frame_99.svg", second, "Phase 2")
+    
+    svg_folder_path = './ex3/'
+    png_folder_path = './ex3/ex3_png'
+    png_files = convert_svgs_to_pngs(svg_folder_path, png_folder_path)
+    
+    animator = SVGAnimator(root, png_files, third, delay=40)    
+    
+
+def example4(): #example 2 display
+    display_svg("./ex4/frame_000.svg", first, "Phase 1")
+    display_svg("./ex4/frame_100.svg", second, "Phase 2")
+    
+    svg_folder_path = './ex4/'
+    png_folder_path = './ex4/ex4_png'
+    png_files = convert_svgs_to_pngs(svg_folder_path, png_folder_path)
+    
+    animator = SVGAnimator(root, png_files, third, delay=40)    
+
 def make_gif(png_files, output, duration = 500):
     images = [Image.open(img) for img in png_files]
     images[0].save(output, save_all=True, append_images=images[1:], duration=duration, loop=0)
@@ -110,12 +128,14 @@ root.title("Image Morphing")
 # Buttons
 button1 = tk.Button(root, text="Example 1", command=example1)
 button2 = tk.Button(root, text="Example 2", command=example2)
-button3 = tk.Button(root, text="Example 3")
+button3 = tk.Button(root, text="Example 3", command=example3)
+button4 = tk.Button(root, text="Example 4", command=example4)
 
 # Widget Organization
 button1.pack()
 button2.pack()
 button3.pack()
+button4.pack()
 label1 = tk.Label(root)
 label2 = tk.Label(root)
 
