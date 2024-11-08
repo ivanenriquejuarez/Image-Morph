@@ -45,6 +45,6 @@ Used programs and Libraries to consider
 2) Display: in python, the gui is buggy and can't display the shapes properly but to view the shapes, you can manually visit the output folder and it will show case all the frames created during the sequential/parallel version.
 
 ## Code from 3rd Party
-1) Ivan & Wayne: The Formula's with cos and sin to get the interpolating_points. We couldn't understand how to fully utuilize the bezier method without have a GPT generated formula to get those points.
+1) Ivan & Wayne: The Formula's with cos and sin to get the interpolating_points. We didn't understand how to fully utuilize the bezier method without have a GPT generated formula to get those points. 
 2) Josue & Steven: Pragma: we didn't fully understand the approach to utilize parallel since we have a bottleneck issue of I/O reading and writing till GPT gave examples to use whether it was CUDA, pthreads, and openMP. We utilized the information gathered from GPT.
 
