@@ -47,5 +47,4 @@ Used programs and Libraries to consider
 ## Code from 3rd Party
 1) Ivan & Wayne: The Formula's with cos and sin to get the interpolating_points. We couldn't understand how to fully utuilize the bezier method without have a GPT generated formula to get those points.
 2) Josue & Steven: Pragma: we didn't fully understand the approach to utilize parallel since we have a bottleneck issue of I/O reading and writing till GPT gave examples to use whether it was CUDA, pthreads, and openMP. We utilized the information gathered from GPT.
-3) 
 
