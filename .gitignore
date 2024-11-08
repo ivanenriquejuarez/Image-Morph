@@ -2,3 +2,4 @@
 *.out
 morph
 *.exe
+env/

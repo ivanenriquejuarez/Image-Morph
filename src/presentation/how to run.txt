@@ -1,0 +1,12 @@
+Requirements: 
+C - LibXML, OpenMP
+
+compile the sequential version of circle to triangle
+gcc -o morph_animation_s circle-to-triangle.c $(xml2-config --cflags --libs) -lm
+./morph_animation_s
+
+compile the parallel version of circle to triangle
+gcc -o morph_animation_p morph_c_to_tr_para_2.c -fopenmp $(xml2-config --cflags --libs) -lm
+./morph_animation
+
+
