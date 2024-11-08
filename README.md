@@ -24,7 +24,8 @@ Used programs and Libraries to consider
 - Two versions C and Python of Sequential Version
     - Both contain the very basic implementation of the interpolating methods.
     - Wayne's version was the two lines coming together (python).
-    - We covered the basics of interpolating methods using basic fixed shape points- evolved to using complex fixed shape         polygon and eventually we were able to extract the SVG coordinates and use the bezier interpolation method to do the         circle to triangle morphing.  
+    - We covered the basics of interpolating methods using basic fixed shape points- evolved to using complex fixed shape         polygon and eventually we were able to extract the SVG coordinates and use the bezier interpolation method to do the         circle to triangle morphing.
+- src/c: It has the foundation of how we started with this project. We start with the basic implementation of what interpolation is, then we moved to object tests, using svg coordinates, to the finished bezier product.
 
 
 ## Project Structure
