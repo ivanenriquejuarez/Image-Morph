@@ -19,6 +19,7 @@ Used programs and Libraries to consider
 1) C and Python
 2) OpenMP (Parallelizing): sudo apt-get install libomp-dev    
 3) LibXML (Extracting SVG coordinates): sudo apt-get install libxml2 libxml2-dev
+4) Check presentation folder to see how to run these files indivudually or just have the bash file run both automatically. 
 
 ## Features
 - Two versions C and Python of Sequential Version
