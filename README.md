@@ -29,7 +29,7 @@ You can run this project to see a smooth transition from a small circle to a lar
 ## Project Structure
 1) src - contains all source code in C and python
 -  C contains the very basics of interpolating methods.
-- Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle.
+- Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle, as well as includes the pythonGUI display.
 
 ## how It Works
 1) 1.c: to understand how to generate a frame with respect to the target svg from source svg, we must understand the basics of interpolating. Interpolating is finding an in-between value depending on a factor of 't' where it is from 0 to 1 (think of 0 as the starting and 1 the ending). In 1.c soruce code, we start with the source and have an end point, with the help of the linear interpolation formula, we can calculate the result with respect to t (remember t is the value between 0 - 1).
