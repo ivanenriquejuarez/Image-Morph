@@ -14,22 +14,22 @@ This is a basic project that showcases how to perform image morphing between two
 
 You can run this project to see a smooth transition from a small circle to a larger one, with all the intermediate shapes saved as separate SVG files in c.
 
+## How to run (based on the files of the presentation folder)
+Used programs and Libraries to consider
+1) C and Python
+2) OpenMP (Parallelizing): sudo apt-get install libomp-dev    
+3) LibXML (Extracting SVG coordinates): sudo apt-get install libxml2 libxml2-dev
+
 ## Features
-- Two versions C and Python
+- Two versions C and Python of Sequential Version
     - Both contain the very basic implementation of the interpolating methods.
-- Python is the only one that can do the following:
-    - Open/close SVG files
-    - Extract the path details
-    - Generates SVG files for each frame of the morphing animation based on the path details.
-    - Basic linear interpolation between two shapes.
-    - Avoids overwriting files if they already exist.
-    - Display results (testing).
+    - Wayne's version was the two lines coming together (python).
+    - We covered the basics of interpolating methods using basic fixed shape points- evolved to using complex fixed shape         polygon and eventually we were able to extract the SVG coordinates and use the bezier interpolation method to do the         circle to triangle morphing.  
 
 
 ## Project Structure
-1) src - contains all source code in C and python
--  C contains the very basics of interpolating methods.
-- Python contains the actual image morph that extracts the svg files and uses interpolation method to morph a circle shape into a triangle.
+1) imagetweening/src/c: contains the understanding of the how the program works but doing small versions of the project.
+2) imagetweening/src/presentation: contains the finished product of circle to triangle with extracting of points, read and      writing svg files, and calculating interpolating points.
 
 ## how It Works
 1) 1.c: to understand how to generate a frame with respect to the target svg from source svg, we must understand the basics of interpolating. Interpolating is finding an in-between value depending on a factor of 't' where it is from 0 to 1 (think of 0 as the starting and 1 the ending). In 1.c soruce code, we start with the source and have an end point, with the help of the linear interpolation formula, we can calculate the result with respect to t (remember t is the value between 0 - 1).
@@ -38,11 +38,14 @@ You can run this project to see a smooth transition from a small circle to a lar
 4) 4.c: lets apply the knowledge from the previous intermediate methods but now we wish to generate an SVG file for the given results of t. We don't extract anything, we have prewritten circle(s) coordinates wihtin a method.
 5) 5.c: we want to morph a small circle svg to a large circle svg, so we import libxml libraries to extract the path details of said svg files, traverse through the svg to find circle element and extract the details. We get those coordinates and place it into our morph method that we created, we then write (generate) the corresponding svg file for the current frame.
 6) 6.c: a triangle to circle svg- instead of using a basic interpolation linear method we will use the bezier method which is defined by 3 points, starting, middle, and ending point.
+7) presentation/all the files: is the finished product that has a lot of morphing mock up from source to target. 
 
 ## Current Issues
-1) morph2.py cannot do complex shapes yet.
-2) displaying results is a mock up and has nothing to do with the svg files.
-3) parallelization hasn't been implemented.
-4) I tried to use xml library in C but was going into a lot of issues in regards to extracting path details from svg which is why I changed to python for the actual morphing (morph2.py).
-5) We only have less than 2 weeks to finish :(
+1) Complex shapes: to many points to manually program- almost impossible to program.
+2) Display: in python, the gui is buggy and can't display the shapes properly but to view the shapes, you can manually visit the output folder and it will show case all the frames created during the sequential/parallel version.
+
+## Code from 3rd Party
+1) Ivan & Wayne: The Formula's with cos and sin to get the interpolating_points. We couldn't understand how to fully utuilize the bezier method without have a GPT generated formula to get those points.
+2) Josue & Steven: Pragma: we didn't fully understand the approach to utilize parallel since we have a bottleneck issue of I/O reading and writing till GPT gave examples to use whether it was CUDA, pthreads, and openMP. We utilized the information gathered from GPT.
+3) 
 
